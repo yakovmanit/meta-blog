@@ -1,8 +1,19 @@
+import Header from "./components/Header.tsx";
+import {Route, Routes} from "react-router-dom";
+import Home from "./pages/Home.tsx";
+import NotFound from "./pages/NotFound.tsx";
+
 function App() {
   return (
-    <>
-      <p className="text-lg">Hello world</p>
-    </>
+    <div>
+      <div className="custom-container">
+        <Header />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </div>
+    </div>
   )
 }
 

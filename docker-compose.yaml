@@ -5,13 +5,13 @@ services:
     build: ./server
     container_name: server
     ports:
-      - "4444:3000"          # host:container
+      - "4444:3000"
     volumes:
-      - ./server:/app        # исходники
-      - /app/node_modules    # чтобы локальные node_modules не перекрыли контейнерные
+      - ./server:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true  # Windows + WSL/FUSE
+      - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=300
 
   client:
@@ -26,5 +26,5 @@ services:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=300
-    stdin_open: true   # чтобы работали prompts/React-refresh
+    stdin_open: true
     tty: true

@@ -1,6 +1,6 @@
-DOCKER
-command for images and containers clearing:
-docker-compose down --rmi all
+## DOCKER
+command for images and containers clearing: <br>
+```docker-compose down --rmi all```
 
-command for images and containers creating:
-docker-compose up --build   
+command for images and containers creating: <br>
+```docker-compose up --build```
