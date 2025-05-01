@@ -6,6 +6,7 @@ import {registerValidation} from "./validations/auth.js";
 import userModel from "./models/User.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import checkAuth from "./utils/checkAuth.js";
 
 dotenv.config();
 
@@ -20,10 +21,6 @@ mongoose.connect(process.env.MONGODB_URL)
 const app = express();
 
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello world' });
-});
 
 app.post('/auth/register', registerValidation, async (req, res) => {
   try {
@@ -111,6 +108,28 @@ app.post('/auth/login', async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: 'Auth failed'
+    });
+  }
+});
+
+app.get('/auth/me', checkAuth, async (req, res) => {
+  try {
+    const user = await userModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(500).json({
+        message: 'User not found'
+      });
+    }
+
+    const { passwordHash, ...userData } = user._doc;
+
+    res.json(userData);
+
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: 'Forbidden access'
     });
   }
 });
