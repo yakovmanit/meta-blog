@@ -31,7 +31,7 @@ app.post('/posts', checkAuth, postDataValidation, PostController.createPost);
 app.get('/posts', PostController.getAllPosts);
 app.get('/posts/:id', PostController.getOnePost);
 app.patch('/posts/:id', checkAuth, postDataValidation, PostController.updatePost);
-// app.delete('/posts/:id', checkAuth, PostController.deletePost);
+app.delete('/posts/:id', checkAuth, PostController.deletePost);
 
 
 export const viteNodeApp = app;
