@@ -29,7 +29,7 @@ app.get('/auth/me', checkAuth, UserController.getMe);
 // Posts
 app.post('/posts', checkAuth, postCreateValidation, PostController.createPost);
 app.get('/posts', PostController.getAllPosts);
-// app.get('/posts/:id', PostController.getOnePost);
+app.get('/posts/:id', PostController.getOnePost);
 // app.patch('/posts/:id', checkAuth, PostController.updatePost);
 // app.delete('/posts/:id', checkAuth, PostController.deletePost);
 

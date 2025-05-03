@@ -31,10 +31,7 @@ export const createPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find().populate({
-      path: 'user',
-      select: ['fullName', 'avatarUrl'],
-    }).exec();
+    const posts = await PostModel.find().populate("user", "fullName avatarUrl");
 
     res.json(posts);
 
@@ -42,6 +39,36 @@ export const getAllPosts = async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: 'Posts not received',
+    });
+  }
+}
+
+export const getOnePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    const post = await PostModel.findByIdAndUpdate(
+      postId,
+      {
+        $inc: { viewsCount: 1 }
+      },
+      {
+        returnDocument: 'after'
+      }
+    ).populate("user", "fullName avatarUrl")
+
+    if (!post) {
+      return res.status(400).json({
+        message: 'Post not found',
+      });
+    }
+
+    res.json(post);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Post not received',
     });
   }
 }
