@@ -6,6 +6,7 @@ import {postDataValidation} from "./validations/post.js";
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
+import multer from 'multer';
 
 dotenv.config();
 
@@ -19,7 +20,26 @@ mongoose.connect(process.env.MONGODB_URL)
 
 const app = express();
 
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+
+// Images
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+  res.json({
+    url: `/uploads/${req.file.originalname}`,
+  });
+});
 
 // Auth
 app.post('/auth/register', registerValidation, UserController.register);
