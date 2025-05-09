@@ -1,13 +1,15 @@
 import React, {useEffect} from 'react';
 import banner from '../assets/img/banner.jpg';
 import heroAvatar from '../assets/img/hero-avatar.jpg';
-import PostCard from "../components/PostCard.tsx";
+import PostCard from "../components/PostCard/index.tsx";
 import {fetchPosts} from "../../redux/slices/postsSlice.ts";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
+import PostCardSkeleton from "../components/PostCard/PostCardSkeleton.tsx";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.posts.items);
+  const postsStatus = useAppSelector((state) => state.posts.loading);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -42,8 +44,14 @@ const Home: React.FC = () => {
 
         <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {
-            posts.map(post =>
-              <PostCard key={post._id} {...post} />
+            postsStatus === 'pending' || postsStatus ===  'failed' ? (
+              [...new Array(5)].map(() =>
+                <PostCardSkeleton />
+              )
+            ) : (
+              posts.map(post =>
+                <PostCard key={post._id} {...post} />
+              )
             )
           }
         </div>

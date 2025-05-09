@@ -1,12 +1,11 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "axios";
+import {PostType} from "../../src/types.ts";
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const fetchPosts = createAsyncThunk('posts/getAll', async () => {
     try {
       const { data } = await axios.get('http://localhost:4444/posts');
-
-      console.log(data);
 
       return data;
 
@@ -14,23 +13,6 @@ export const fetchPosts = createAsyncThunk('posts/getAll', async () => {
       console.log(err);
     }
 })
-
-type UserType = {
-  _id: string;
-  fullName: string;
-}
-
-type PostType = {
-  _id: string;
-  title: string;
-  text: string;
-  tags: string[];
-  viewsCount: number;
-  user: UserType;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 interface PostsState {
   items: PostType[];
@@ -56,7 +38,6 @@ export const postsSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.items = action.payload;
-        // console.log(action.payload);
         state.loading = 'succeeded';
       })
       .addCase(fetchPosts.rejected, (state) => {
