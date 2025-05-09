@@ -44,12 +44,14 @@ const Header: React.FC = () => {
         {
           closeMenu && (
             // mobile menu
-            <ul className="fixed left-0 top-0 w-full bg-white h-full text-base pt-6 md:hidden">
+            <ul className="z-20 fixed left-0 top-0 w-full bg-white h-full text-base pt-6 md:hidden">
               <button onClick={() => setCloseMenu(false)} className="max-w-6 max-h-6 absolute right-4 top-4">
                 <img src={closeIcon} alt="close"/>
               </button>
               <li className="px-6 py-4"><Link to='/home'>Home</Link></li>
               <li className="px-6 py-4"><Link to='/contacts'>Contacts</Link></li>
+              <li className="px-6 py-4"><Link to='/register'>Register</Link></li>
+              <li className="px-6 py-4"><Link to='/login'>Login</Link></li>
             </ul>
           )
         }
@@ -66,26 +68,36 @@ const Header: React.FC = () => {
         {/*  <img className="w-4 h-4" src={searchIcon} alt="search"/>*/}
         {/*</label>*/}
 
-        {/*  Theme switch */}
-        <div className="ml-auto mr-3 md:ml-0 md:mr-0">
-          <input
-            id="theme-toggle"
-            type="checkbox"
-            className="peer hidden"
-            checked={isDark}
-            onChange={handleToggle}
-          />
-          <label
-            htmlFor="theme-toggle"
-            className="w-14 h-8 flex items-center bg-[#E8E8EA] dark:bg-[#4B6BFB] rounded-full p-1 cursor-pointer transition-colors duration-300"
-          >
-            <div
-              className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
-                isDark ? "translate-x-6" : "translate-x-0"
-              }`}
-            ></div>
-          </label>
+        <div className="flex gap-4 items-center ml-auto mr-3 md:ml-0 md:mr-0">
+          {/* Auth */}
+          <div className="gap-2 hidden md:flex">
+            <Link to={"/register"}>Register</Link>
+            <span>/</span>
+            <Link to={"/login"}>Login</Link>
+          </div>
+
+          {/*  Theme switch */}
+          <div>
+            <input
+              id="theme-toggle"
+              type="checkbox"
+              className="peer hidden"
+              checked={isDark}
+              onChange={handleToggle}
+            />
+            <label
+              htmlFor="theme-toggle"
+              className="w-14 h-8 flex items-center bg-[#E8E8EA] dark:bg-[#4B6BFB] rounded-full p-1 cursor-pointer transition-colors duration-300"
+            >
+              <div
+                className={`w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                  isDark ? "translate-x-6" : "translate-x-0"
+                }`}
+              ></div>
+            </label>
+          </div>
         </div>
+
 
         {/* Menu burger */}
         <button className="md:hidden" onClick={() => setCloseMenu(true)}>
