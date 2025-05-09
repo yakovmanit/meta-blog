@@ -14,3 +14,9 @@ export type PostType = {
   createdAt: string;
   updatedAt: string;
 }
+
+export type RegisterValuesType = {
+  fullName: string,
+  email: string,
+  password: string,
+}

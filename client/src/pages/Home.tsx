@@ -45,8 +45,8 @@ const Home: React.FC = () => {
         <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {
             postsStatus === 'pending' || postsStatus ===  'failed' ? (
-              [...new Array(5)].map(() =>
-                <PostCardSkeleton />
+              [...new Array(5)].map((_, i) =>
+                <PostCardSkeleton key={i} />
               )
             ) : (
               posts.map(post =>

@@ -5,8 +5,21 @@ import closeIcon from "@/assets/img/close.svg";
 // import searchIcon from "@/assets/img/search.svg";
 import burgerIcon from "@/assets/img/burger.svg";
 import {Link} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
+import {fetchAuthMe, logout} from "../../redux/slices/authSlice.ts";
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(state => Boolean(state.auth.data));
+
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      dispatch(fetchAuthMe());
+    }
+  }, [dispatch]);
+
+
   const [closeMenu, setCloseMenu] = useState<boolean>(false);
 
   const [isDark, setIsDark] = useState(false);
@@ -70,11 +83,20 @@ const Header: React.FC = () => {
 
         <div className="flex gap-4 items-center ml-auto mr-3 md:ml-0 md:mr-0">
           {/* Auth */}
-          <div className="gap-2 hidden md:flex">
-            <Link to={"/register"}>Register</Link>
-            <span>/</span>
-            <Link to={"/login"}>Login</Link>
-          </div>
+          {
+            isAuth ? (
+              <div className="gap-2 hidden md:flex">
+                <button onClick={() => dispatch(logout())} className="cursor-pointer">Log out</button>
+              </div>
+            ) : (
+              <div className="gap-2 hidden md:flex">
+                <Link to={"/register"}>Register</Link>
+                <span>/</span>
+                <Link to={"/login"}>Login</Link>
+              </div>
+            )
+          }
+
 
           {/*  Theme switch */}
           <div>
