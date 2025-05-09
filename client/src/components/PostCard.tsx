@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 const PostCard = () => {
   return (
-    <div className="border border-gray-border p-3 rounded-xl">
+    <div className="border border-gray-border p-3 rounded-xl hover:border-gray transition-colors">
       <div className="mb-4 h-[60vw] rounded-xl overflow-hidden md:h-[30vw] xl:h-[17vw] xl:max-h-60">
         <Link to={"/"}>
           <img className="h-full w-full object-cover" src={banner} alt="banner"/>

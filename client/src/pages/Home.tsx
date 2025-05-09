@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import banner from '../assets/img/banner.jpg';
-import heroAvatar from '../assets/img/hero-avatar.jpg'
+import heroAvatar from '../assets/img/hero-avatar.jpg';
 import PostCard from "../components/PostCard.tsx";
+import {fetchPosts} from "../../redux/slices/postsSlice.ts";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 
 const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const posts = useAppSelector((state) => state.posts.items);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch])
+
   return (
     <div className="mb-48">
       {/* Hero */}
@@ -32,10 +41,11 @@ const Home: React.FC = () => {
         </h2>
 
         <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
+          {
+            posts.map(post =>
+              <PostCard key={post._id} {...post} />
+            )
+          }
         </div>
       </section>
     </div>

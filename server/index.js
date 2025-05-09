@@ -7,6 +7,8 @@ import checkAuth from "./utils/checkAuth.js";
 import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
 import multer from 'multer';
+import cors from 'cors';
+
 
 dotenv.config();
 
@@ -33,6 +35,7 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+app.use(cors());
 
 // Images
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
