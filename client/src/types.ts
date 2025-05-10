@@ -20,3 +20,8 @@ export type RegisterValuesType = {
   email: string,
   password: string,
 }
+
+export type LoginValuesType = {
+  email: string,
+  password: string,
+}

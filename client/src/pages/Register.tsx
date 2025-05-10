@@ -4,7 +4,6 @@ import {fetchRegister} from "../../redux/slices/authSlice";
 import {useForm} from "react-hook-form";
 import React from "react";
 import {RegisterValuesType} from "../types.ts";
-// import {useForm} from "react-hook-form";
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "../../src/axios";
-import {RegisterValuesType} from "../../src/types.ts";
+import {LoginValuesType, RegisterValuesType} from "../../src/types.ts";
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params: RegisterValuesType) => {
@@ -15,7 +15,7 @@ export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
     return data;
 })
 
-export const fetchLogin = createAsyncThunk('auth/fetchLogin', async (params) => {
+export const fetchLogin = createAsyncThunk('auth/fetchLogin', async (params: LoginValuesType) => {
     const { data } = await axios.post('/auth/login', params);
 
     return data;
@@ -37,6 +37,7 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.data = null;
+      window.localStorage.removeItem('token');
     }
   },
   extraReducers: (builder) => {
