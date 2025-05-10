@@ -1,17 +1,9 @@
-import {Navigate, useNavigate} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {useAppSelector} from "../../redux/hooks.ts";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import React from 'react';
 import axios from "../axios.ts";
-// import {fetchRegister} from "../../redux/slices/authSlice.ts";
-
-// type AddPostType = {
-//   title: string;
-//   text: string;
-//   tags: string;
-//   user: string;
-//   imageUrl: string;
-// }
+import {PostType} from "../types.ts";
 
 const AddPost = () => {
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
@@ -23,6 +15,8 @@ const AddPost = () => {
   const [imageUrl, setImageUrl] = useState('');
 
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEdible = id;
 
   // Upload image to server and set its url into imageUrl
   const handleChangeFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,14 +48,27 @@ const AddPost = () => {
       imageUrl,
     }
 
-    const { data } = await axios.post('/posts', fields);
+    const { data } = !isEdible
+      ? await axios.post('/posts', fields)
+      : await axios.patch(`/posts/${id}`, fields);
 
-    console.log('data after edd post', data)
+    const _id = isEdible ? id : data._id;
 
-    const id = data._id;
-
-    navigate(`/posts/${id}`)
+    navigate(`/posts/${_id}`)
   }
+
+  // Update post logic
+  useEffect(() => {
+    if (id) {
+      axios.get<PostType>(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setText(data.text);
+          setTags(data.tags.join(', '));
+          setImageUrl(data.imageUrl);
+        })
+    }
+  }, [id]);
 
   if (!window.localStorage.getItem('token') && !isAuth) {
     return <Navigate to={"/"} />
@@ -91,6 +98,7 @@ const AddPost = () => {
             id="title"
             type="text"
             placeholder="Enter the title"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -103,6 +111,7 @@ const AddPost = () => {
             id="text"
             type="text"
             placeholder="text"
+            value={text}
             onChange={(e) => setText(e.target.value)}
           />
         </div>
@@ -115,6 +124,7 @@ const AddPost = () => {
             id="tags"
             type="tags"
             placeholder="enter tags (with comma)"
+            value={tags}
             onChange={(e) => setTags(e.target.value)}
           />
         </div>

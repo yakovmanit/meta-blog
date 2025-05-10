@@ -2,8 +2,11 @@ import heroAvatar from "../../assets/img/hero-avatar.jpg";
 import {Link} from "react-router-dom";
 import {PostType} from "../../types.ts";
 import React from "react";
+import {useAppSelector} from "../../../redux/hooks.ts";
 
 const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, createdAt }) => {
+  const currentUser = useAppSelector(state => state.auth.data);
+
   const formatDate = (isoDate: string): string => {
     const date = new Date(isoDate);
 
@@ -16,7 +19,18 @@ const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, create
 
   return (
     <div className="border border-gray-border p-3 rounded-xl hover:border-gray transition-colors">
-      <div className="mb-4 h-[60vw] rounded-xl overflow-hidden md:h-[30vw] xl:h-[17vw] xl:max-h-60">
+      <div className="relative mb-4 h-[60vw] rounded-xl overflow-hidden md:h-[30vw] xl:h-[17vw] xl:max-h-60">
+        {
+          currentUser?._id === user._id && (
+            <Link
+              className="text-white bg-primary py-2 px-4 rounded-md absolute top-2 right-2 hover:bg-blue-800"
+              to={`/posts/edit/${_id}`}
+            >
+              Edit
+            </Link>
+          )
+        }
+
         <Link to={`/posts/${_id}`}>
           <img className="h-full w-full object-cover" src={`http://localhost:4444${imageUrl}`} alt="banner"/>
         </Link>

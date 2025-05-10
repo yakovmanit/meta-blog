@@ -19,6 +19,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/account' element={<Account />} />
           <Route path='/posts/add-new' element={<AddPost />} />
+          <Route path='/posts/edit/:id/' element={<AddPost />} />
         </Routes>
       </div>
     </div>

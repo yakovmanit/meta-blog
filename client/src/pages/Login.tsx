@@ -19,7 +19,7 @@ const Login = () => {
   const onSubmit = async (values: LoginValuesType) => {
     const data = await dispatch(fetchLogin(values));
 
-    console.log(data);
+    // console.log(data);
 
     if (!data.payload) {
       alert('Registration failed');
