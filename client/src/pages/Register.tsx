@@ -1,5 +1,5 @@
-import {Link} from "react-router-dom";
-import {useAppDispatch} from "../../redux/hooks.ts";
+import {Link, Navigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {fetchRegister} from "../../redux/slices/authSlice";
 import {useForm} from "react-hook-form";
 import React from "react";
@@ -7,6 +7,7 @@ import {RegisterValuesType} from "../types.ts";
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(state => Boolean(state.auth.data));
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -29,6 +30,10 @@ const Register: React.FC = () => {
       if ('token' in data.payload) {
         window.localStorage.setItem('token', data.payload.token);
       }
+  }
+
+  if (isAuth) {
+    return <Navigate to={"/"} />
   }
 
   return (

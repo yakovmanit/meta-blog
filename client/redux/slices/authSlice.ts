@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "../../src/axios";
-import {LoginValuesType, RegisterValuesType} from "../../src/types.ts";
+import {LoginValuesType, RegisterValuesType, UserType} from "../../src/types.ts";
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params: RegisterValuesType) => {
@@ -22,7 +22,7 @@ export const fetchLogin = createAsyncThunk('auth/fetchLogin', async (params: Log
 })
 
 interface AuthState {
-  data: string | null;
+  data: UserType | null;
   loading: 'pending' | 'succeeded' | 'failed';
 }
 

@@ -1,10 +1,12 @@
 import {useForm} from "react-hook-form";
 import {LoginValuesType} from "../types.ts";
 import {fetchLogin} from "../../redux/slices/authSlice.ts";
-import {useAppDispatch} from "../../redux/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
+import {Navigate} from "react-router-dom";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(state => Boolean(state.auth.data));
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -26,6 +28,10 @@ const Login = () => {
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
     }
+  }
+
+  if (isAuth) {
+    return <Navigate to={"/"} />
   }
 
   return (

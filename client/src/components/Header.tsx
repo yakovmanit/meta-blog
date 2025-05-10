@@ -6,11 +6,14 @@ import closeIcon from "@/assets/img/close.svg";
 import burgerIcon from "@/assets/img/burger.svg";
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {fetchAuthMe, logout} from "../../redux/slices/authSlice.ts";
+import {fetchAuthMe} from "../../redux/slices/authSlice.ts";
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
+  const currentUser = useAppSelector(state => state.auth.data);
+
+  console.log('currentUser', currentUser);
 
   useEffect(() => {
     const token = window.localStorage.getItem('token');
@@ -86,7 +89,7 @@ const Header: React.FC = () => {
           {
             isAuth ? (
               <div className="gap-2 hidden md:flex">
-                <button onClick={() => dispatch(logout())} className="cursor-pointer">Log out</button>
+                <Link to={`/account`}>My account</Link>
               </div>
             ) : (
               <div className="gap-2 hidden md:flex">

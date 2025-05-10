@@ -1,11 +1,11 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import axios from "axios";
+import axios from "../../src/axios";
 import {PostType} from "../../src/types.ts";
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const fetchPosts = createAsyncThunk('posts/getAll', async () => {
     try {
-      const { data } = await axios.get('http://localhost:4444/posts');
+      const { data } = await axios.get('/posts');
 
       return data;
 
