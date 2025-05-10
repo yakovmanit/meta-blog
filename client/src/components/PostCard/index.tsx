@@ -18,7 +18,7 @@ const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, create
     <div className="border border-gray-border p-3 rounded-xl hover:border-gray transition-colors">
       <div className="mb-4 h-[60vw] rounded-xl overflow-hidden md:h-[30vw] xl:h-[17vw] xl:max-h-60">
         <Link to={`/posts/${_id}`}>
-          <img className="h-full w-full object-cover" src={imageUrl} alt="banner"/>
+          <img className="h-full w-full object-cover" src={`http://localhost:4444${imageUrl}`} alt="banner"/>
         </Link>
       </div>
 

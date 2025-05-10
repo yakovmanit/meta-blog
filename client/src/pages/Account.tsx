@@ -1,4 +1,4 @@
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {logout} from "../../redux/slices/authSlice.ts";
 import PostCardSkeleton from "../components/PostCard/PostCardSkeleton.tsx";
@@ -18,7 +18,7 @@ const Account = () => {
     dispatch(fetchPosts());
   }, [dispatch])
 
-  if (!isAuth) {
+  if (!window.localStorage.getItem('token') && !isAuth) {
     return <Navigate to={"/"} />
   }
 
@@ -57,6 +57,10 @@ const Account = () => {
           <button className="cursor-pointer w-max bg-primary py-2 px-4 rounded-md hover:bg-blue-800">Edit</button>
           <button onClick={() => dispatch(logout())} className="cursor-pointer w-max bg-red-600 py-2 px-4 rounded-md hover:bg-red-800">Log out</button>
         </div>
+      </div>
+
+      <div className="flex justify-end">
+        <Link className="text-white bg-primary py-2 px-4 rounded-md hover:bg-blue-800" to={"/posts/add-new"}>Add new post</Link>
       </div>
 
       {/* User posts block */}

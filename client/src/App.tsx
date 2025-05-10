@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Register from "./pages/Register.tsx";
 import Login from "./pages/Login.tsx";
 import Account from "./pages/Account.tsx";
+import AddPost from "./pages/AddPost.tsx";
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
           <Route path='*' element={<NotFound />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          {/*<Route path='/account/:id' element={<Account />} />*/}
           <Route path='/account' element={<Account />} />
+          <Route path='/posts/add-new' element={<AddPost />} />
         </Routes>
       </div>
     </div>
