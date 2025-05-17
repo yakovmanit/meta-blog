@@ -7,11 +7,12 @@ import Login from "./pages/Login.tsx";
 import Account from "./pages/Account.tsx";
 import AddPost from "./pages/AddPost.tsx";
 import FullPost from "./pages/FullPost.tsx";
+import Footer from "./components/Footer.tsx";
 
 function App() {
   return (
     <div>
-      <div className="custom-container">
+      <div className="flex justify-between flex-col min-h-dvh">
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -23,6 +24,7 @@ function App() {
           <Route path='/posts/edit/:id/' element={<AddPost />} />
           <Route path='/posts/:id/' element={<FullPost />} />
         </Routes>
+        <Footer />
       </div>
     </div>
   )

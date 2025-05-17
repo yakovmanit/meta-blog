@@ -51,7 +51,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <div className="flex justify-between items-center py-4 lg:py-8">
+      <div className="custom-container flex justify-between items-center py-4 lg:py-8">
         {/* Logo */}
         <Link to='/'>
           {/*<img src={logo} alt="logo"/>*/}
