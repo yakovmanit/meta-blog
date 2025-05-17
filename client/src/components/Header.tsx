@@ -11,9 +11,9 @@ import {fetchAuthMe} from "../../redux/slices/authSlice.ts";
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
-  const currentUser = useAppSelector(state => state.auth.data);
+  // const currentUser = useAppSelector(state => state.auth.data);
 
-  console.log('currentUser', currentUser);
+  // console.log('currentUser', currentUser);
 
   useEffect(() => {
     const token = window.localStorage.getItem('token');
