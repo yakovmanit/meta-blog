@@ -11,3 +11,8 @@ export const registerValidation = [
   body('password', 'The password has to be at least 4 symbols').isLength({min: 4}),
   body('avatarUrl', 'Wrong avatar url').optional().isURL(),
 ];
+
+export const updateUserValidation = [
+  body('fullName', 'Write your name (only letters)').isLength({min: 2}),
+  body('avatarUrl', 'Wrong avatar url').optional().isURL(),
+];

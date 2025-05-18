@@ -1,13 +1,14 @@
 import express from 'express';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
-import {registerValidation} from "./validations/auth.js";
+import {registerValidation, updateUserValidation} from "./validations/auth.js";
 import {postDataValidation} from "./validations/post.js";
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
 import multer from 'multer';
 import cors from 'cors';
+import {updateUser} from "./controllers/UserController.js";
 
 
 dotenv.config();
@@ -48,6 +49,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 app.post('/auth/register', registerValidation, UserController.register);
 app.post('/auth/login', UserController.login);
 app.get('/auth/me', checkAuth, UserController.getMe);
+app.patch('/auth/edit', checkAuth, updateUserValidation, UserController.updateUser);
 
 // Posts
 app.post('/posts', checkAuth, postDataValidation, PostController.createPost);

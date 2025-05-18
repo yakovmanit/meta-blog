@@ -114,3 +114,33 @@ export const getMe = async (req, res) => {
     });
   }
 }
+
+export const updateUser = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    await UserModel.updateOne(
+      {
+        _id: req.userId
+      },
+      {
+        fullName: req.body.fullName,
+        imageUrl: req.body.imageUrl,
+      },
+    );
+
+    res.json({
+      message: 'User updated successfully',
+    });
+
+  } catch (err) {
+    console.warn(err);
+    res.status(500).json({
+      message: 'User not updated',
+    });
+  }
+}
