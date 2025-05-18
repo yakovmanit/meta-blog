@@ -14,6 +14,18 @@ export const fetchPosts = createAsyncThunk('posts/getAll', async () => {
     }
 })
 
+export const deletePost = createAsyncThunk('posts/delete', async (id: string) => {
+    try {
+      const { data } = await axios.delete(`/posts/${id}`);
+
+      console.log(data);
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+})
+
 interface PostsState {
   items: PostType[];
   loading: 'pending' | 'succeeded' | 'failed';
@@ -27,11 +39,10 @@ const initialState: PostsState = {
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
+      // Posts fetching
       .addCase(fetchPosts.pending, (state) => {
         state.items = [];
         state.loading = 'pending';
@@ -43,6 +54,11 @@ export const postsSlice = createSlice({
       .addCase(fetchPosts.rejected, (state) => {
         state.items = [];
         state.loading = 'failed';
+      })
+
+      // Post deleting
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.items = state.items.filter(post => post._id !== action.meta.arg);
       })
   },
 })

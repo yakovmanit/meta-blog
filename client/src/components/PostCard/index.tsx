@@ -2,10 +2,12 @@ import heroAvatar from "../../assets/img/hero-avatar.jpg";
 import {Link} from "react-router-dom";
 import {PostType} from "../../types.ts";
 import React from "react";
-import {useAppSelector} from "../../../redux/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
+import {deletePost} from "../../../redux/slices/postsSlice.ts";
 
 const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, createdAt }) => {
   const currentUser = useAppSelector(state => state.auth.data);
+  const dispatch = useAppDispatch();
 
   const formatDate = (isoDate: string): string => {
     const date = new Date(isoDate);
@@ -17,17 +19,24 @@ const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, create
     });
   };
 
+  const deletePostHandler = async () => {
+    await dispatch(deletePost(_id));
+  }
+
   return (
     <div className="border border-gray-border p-3 rounded-xl hover:border-gray transition-colors">
       <div className="relative mb-4 h-[60vw] rounded-xl overflow-hidden md:h-[30vw] xl:h-[17vw] xl:max-h-60">
         {
           currentUser?._id === user._id && (
-            <Link
-              className="text-white bg-primary py-2 px-4 rounded-md absolute top-2 right-2 hover:bg-blue-800"
-              to={`/posts/edit/${_id}`}
-            >
-              Edit
-            </Link>
+            <>
+              <button onClick={() => deletePostHandler()} className="absolute top-2 right-22 text-white cursor-pointer w-max bg-red-600 py-2 px-4 rounded-md hover:bg-red-800">Delete</button>
+              <Link
+                className="text-white bg-primary py-2 px-4 rounded-md absolute top-2 right-2 hover:bg-blue-800"
+                to={`/posts/edit/${_id}`}
+              >
+                Edit
+              </Link>
+            </>
           )
         }
 
