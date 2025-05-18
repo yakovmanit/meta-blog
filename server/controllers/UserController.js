@@ -128,9 +128,14 @@ export const updateUser = async (req, res) => {
         _id: req.userId
       },
       {
-        fullName: req.body.fullName,
-        imageUrl: req.body.imageUrl,
+        $set: {
+          fullName: req.body.fullName,
+          avatarUrl: req.body.avatarUrl,
+        },
       },
+      {
+        upsert: true,
+      }
     );
 
     res.json({

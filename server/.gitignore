@@ -16,3 +16,4 @@ config.yml
 /.vscode
 
 .env
+/uploads/
