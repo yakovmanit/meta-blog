@@ -32,4 +32,5 @@ export type UserType = {
   email: string,
   createdAt: string;
   updatedAt: string;
+  avatarUrl: string;
 }

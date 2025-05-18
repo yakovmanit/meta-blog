@@ -8,6 +8,7 @@ import Account from "./pages/Account.tsx";
 import AddPost from "./pages/AddPost.tsx";
 import FullPost from "./pages/FullPost.tsx";
 import Footer from "./components/Footer.tsx";
+import UserEdit from "./pages/UserEdit.tsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/account' element={<Account />} />
+          <Route path='/account/edit' element={<UserEdit />} />
           <Route path='/posts/add-new' element={<AddPost />} />
           <Route path='/posts/edit/:id/' element={<AddPost />} />
           <Route path='/posts/:id/' element={<FullPost />} />

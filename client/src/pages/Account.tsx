@@ -23,7 +23,7 @@ const Account = () => {
   }
 
   return (
-    <div>
+    <div className="custom-container">
       <h1 className="mb-8 mt-6 font-semibold text-2xl md:text-4xl md:mb-16">Your account</h1>
       {/* User block */}
       <div className="flex flex-col gap-8 mb-8 md:mb-16 md:flex-row">
@@ -31,7 +31,11 @@ const Account = () => {
         <div className="max-w-40 max-h-40 rounded-full overflow-hidden object-cover shrink-0">
           <img
             className="w-full h-full"
-            src="https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+            src={`${
+              currentUser?.avatarUrl 
+                ? `http://localhost:4444${currentUser.avatarUrl}` 
+                : 'https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg'
+            }`}
             alt="avatar anonymous"
           />
         </div>
@@ -54,7 +58,7 @@ const Account = () => {
 
         {/* Buttons */}
         <div className="flex gap-4 h-max text-white">
-          <button className="cursor-pointer w-max bg-primary py-2 px-4 rounded-md hover:bg-blue-800">Edit</button>
+          <Link to={"/account/edit"} className="cursor-pointer w-max bg-primary py-2 px-4 rounded-md hover:bg-blue-800">Edit</Link>
           <button onClick={() => dispatch(logout())} className="cursor-pointer w-max bg-red-600 py-2 px-4 rounded-md hover:bg-red-800">Log out</button>
         </div>
       </div>
