@@ -23,10 +23,10 @@ const Account = () => {
   }
 
   return (
-    <div className="custom-container">
+    <div className="custom-container w-full">
       <h1 className="mb-8 mt-6 font-semibold text-2xl md:text-4xl md:mb-16">Your account</h1>
       {/* User block */}
-      <div className="flex flex-col gap-8 mb-8 md:mb-16 md:flex-row">
+      <div className="w-full flex flex-col gap-8 mb-8 md:mb-16 md:flex-row">
         {/* User avatar */}
         <div className="max-w-40 max-h-40 rounded-full overflow-hidden object-cover shrink-0">
           <img
@@ -52,12 +52,19 @@ const Account = () => {
             Profile description:
           </p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci assumenda deserunt dolores doloribus eaque eius fugiat id ipsam labore, maxime natus non nostrum porro quisquam quod sit tempora veritatis?
+            {currentUser?.description
+              ? currentUser.description
+              : (
+                <>
+                  Enter your description <Link to={"/account/edit"} className="text-primary underline">edit</Link>
+                </>
+              )
+            }
           </p>
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-4 h-max text-white">
+        <div className="flex gap-4 h-max text-white ml-auto">
           <Link to={"/account/edit"} className="cursor-pointer w-max bg-primary py-2 px-4 rounded-md hover:bg-blue-800">Edit</Link>
           <button onClick={() => dispatch(logout())} className="cursor-pointer w-max bg-red-600 py-2 px-4 rounded-md hover:bg-red-800">Log out</button>
         </div>

@@ -15,4 +15,5 @@ export const registerValidation = [
 export const updateUserValidation = [
   body('fullName', 'Write your name (only letters)').isLength({min: 2}),
   body('avatarUrl', 'Wrong avatar url').optional(),
+  body('description', 'Enter description').optional(),
 ];

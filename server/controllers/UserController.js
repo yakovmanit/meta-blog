@@ -131,6 +131,7 @@ export const updateUser = async (req, res) => {
         $set: {
           fullName: req.body.fullName,
           avatarUrl: req.body.avatarUrl,
+          description: req.body.description,
         },
       },
       {

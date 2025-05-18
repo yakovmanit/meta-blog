@@ -1,15 +1,22 @@
-import {Navigate} from "react-router-dom";
-import {useAppSelector} from "../../redux/hooks.ts";
-import {useRef, useState} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
+import {useEffect, useRef, useState} from "react";
 import React from 'react';
 import axios from "../axios.ts";
+import {fetchAuthMe} from "../../redux/slices/authSlice.ts";
 
 const UserEdit = () => {
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
+  const currentUser = useAppSelector(state => state.auth.data);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const [fullName, setFullName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [description, setDescription] = useState('');
+
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   // Upload image to server and set its url into imageUrl
   const handleChangeFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +33,6 @@ const UserEdit = () => {
 
       const { data } = await axios.post('/upload', formData);
 
-      console.log("Image URL:", data.url);
       setAvatarUrl(data.url);
     } catch (err) {
       console.warn(err);
@@ -38,10 +44,23 @@ const UserEdit = () => {
     const fields = {
       fullName,
       avatarUrl,
+      description,
     }
 
     await axios.patch(`/auth/edit`, fields);
+
+    dispatch(fetchAuthMe());
+
+    navigate('/account')
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      setFullName(currentUser.fullName);
+      setDescription(currentUser.description);
+      setAvatarUrl(currentUser.avatarUrl);
+    }
+  }, [currentUser]);
 
   if (!window.localStorage.getItem('token') && !isAuth) {
     return <Navigate to={"/"} />
@@ -79,6 +98,19 @@ const UserEdit = () => {
             placeholder="Enter the username"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+            Description
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="description"
+            type="text"
+            placeholder="Enter the description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <div className="flex items-center justify-between">

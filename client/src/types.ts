@@ -33,4 +33,5 @@ export type UserType = {
   createdAt: string;
   updatedAt: string;
   avatarUrl: string;
+  description: string;
 }
