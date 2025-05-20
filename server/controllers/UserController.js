@@ -153,7 +153,7 @@ export const updateUser = async (req, res) => {
 
 export const getOneUser = async (req, res) => {
   try {
-    const userId = req.body.id;
+    const userId = req.params.id;
 
     const user = await UserModel.findById(userId);
 
