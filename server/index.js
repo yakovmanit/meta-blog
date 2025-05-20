@@ -8,7 +8,6 @@ import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
 import multer from 'multer';
 import cors from 'cors';
-import {getUniqueTagPosts} from "./controllers/PostController.js";
 
 dotenv.config();
 
@@ -59,7 +58,6 @@ app.get('/posts', PostController.getAllPosts);
 app.get('/posts/:id', PostController.getOnePost);
 app.patch('/posts/:id', checkAuth, postDataValidation, PostController.updatePost);
 app.delete('/posts/:id', checkAuth, PostController.deletePost);
-app.get('/tags/:tagValue', PostController.getUniqueTagPosts);
 
 
 export const viteNodeApp = app;
