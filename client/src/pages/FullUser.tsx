@@ -44,7 +44,7 @@ const FullUser = () => {
   return (
     <div className="mt-6">
       <div className="custom-container">
-        <div className="p-12 bg-[#F6F6F7] rounded-xl mb-12 relative">
+        <div className="px-4 pt-16 pb-8 bg-[#F6F6F7] rounded-xl mb-12 relative md:py-12">
           {/* Buttons */}
           {
             currentUser?._id === userData._id && (

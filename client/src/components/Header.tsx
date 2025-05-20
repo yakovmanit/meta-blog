@@ -87,7 +87,7 @@ const Header: React.FC = () => {
           {
             isAuth ? (
               <div className="gap-2 hidden md:flex">
-                <Link to={`/users/${currentUser._id}`}>My page</Link>
+                <Link to={`/users/${currentUser?._id}`}>My page</Link>
               </div>
             ) : (
               <div className="gap-2 hidden md:flex">

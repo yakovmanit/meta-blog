@@ -133,3 +133,17 @@ export const deletePost = async (req, res) => {
     });
   }
 }
+
+export const getUniqueTagPosts = async (req, res) => {
+  const posts = await PostModel.find({
+    tags: req.params.tagValue,
+  })
+
+  if (posts.length === 0) {
+    res.status(400).json({
+      message: 'Posts with this tag not found',
+    });
+  }
+
+  res.json(posts);
+}
