@@ -9,6 +9,7 @@ import FullPost from "./pages/FullPost.tsx";
 import Footer from "./components/Footer.tsx";
 import UserEdit from "./pages/UserEdit.tsx";
 import FullUser from "./pages/FullUser.tsx";
+import TagPosts from "./pages/TagPosts.tsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/posts/edit/:id/' element={<AddPost />} />
           <Route path='/posts/:id/' element={<FullPost />} />
           <Route path='/users/:id/' element={<FullUser />} />
+          <Route path='/tags/:tagValue/' element={<TagPosts />} />
         </Routes>
         <Footer />
       </div>
