@@ -150,3 +150,25 @@ export const updateUser = async (req, res) => {
     });
   }
 }
+
+export const getOneUser = async (req, res) => {
+  try {
+    const userId = req.body.id;
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({
+        message: 'User not found',
+      });
+    }
+
+    res.json(user);
+
+  } catch (err) {
+    console.warn(err);
+    res.status(500).json({
+      message: 'Users not received'
+    })
+  }
+}

@@ -8,7 +8,7 @@ import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
 import multer from 'multer';
 import cors from 'cors';
-import {updateUser} from "./controllers/UserController.js";
+import {getAllUsers, updateUser} from "./controllers/UserController.js";
 
 
 dotenv.config();
@@ -50,6 +50,9 @@ app.post('/auth/register', registerValidation, UserController.register);
 app.post('/auth/login', UserController.login);
 app.get('/auth/me', checkAuth, UserController.getMe);
 app.patch('/auth/edit', checkAuth, updateUserValidation, UserController.updateUser);
+
+// Users
+app.get('/user', UserController.getOneUser);
 
 // Posts
 app.post('/posts', checkAuth, postDataValidation, PostController.createPost);
