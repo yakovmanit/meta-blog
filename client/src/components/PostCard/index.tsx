@@ -1,4 +1,3 @@
-import heroAvatar from "../../assets/img/hero-avatar.jpg";
 import {Link} from "react-router-dom";
 import {PostType} from "../../types.ts";
 import React from "react";
@@ -69,7 +68,11 @@ const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, create
         {/* User */}
           <Link to={`/users/${user._id}`}>
             <div className="text-sm flex items-center text-gray group md:text-base">
-              <img className="rounded-full mr-3 w-8 h-8" src={heroAvatar} alt="avatar"/>
+              <img className="rounded-full mr-3 w-8 h-8" src={`${
+                user.avatarUrl 
+                  ? `http://localhost:4444${user.avatarUrl}`
+                  : 'https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg'
+              }`} alt="avatar"/>
               <p className="mr-5 font-medium group-hover:text-black transition-colors duration-200">{user.fullName}</p>
               <time className="group-hover:text-black transition-colors duration-200">{formatDate(createdAt)}</time>
             </div>

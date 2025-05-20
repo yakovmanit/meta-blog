@@ -11,9 +11,7 @@ import {fetchAuthMe} from "../../redux/slices/authSlice.ts";
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
-  // const currentUser = useAppSelector(state => state.auth.data);
-
-  // console.log('currentUser', currentUser);
+  const currentUser = useAppSelector(state => state.auth.data);
 
   useEffect(() => {
     const token = window.localStorage.getItem('token');
@@ -89,7 +87,7 @@ const Header: React.FC = () => {
           {
             isAuth ? (
               <div className="gap-2 hidden md:flex">
-                <Link to={`/account`}>My account</Link>
+                <Link to={`/users/${currentUser._id}`}>My page</Link>
               </div>
             ) : (
               <div className="gap-2 hidden md:flex">

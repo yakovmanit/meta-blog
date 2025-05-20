@@ -2,7 +2,6 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "../axios.ts";
 import {PostType} from "../types.ts";
-import heroAvatar from "../assets/img/hero-avatar.jpg";
 
 const FullPost = () => {
   const { id } = useParams();
@@ -65,7 +64,7 @@ const FullPost = () => {
         {/* User */}
         <Link to={`/users/${postData.user._id}`}>
           <div className="text-sm flex items-center text-gray group md:text-base">
-            <img className="rounded-full mr-3 w-8 h-8" src={heroAvatar} alt="avatar"/>
+            <img className="rounded-full mr-3 w-8 h-8" src={`http://localhost:4444${postData.user.avatarUrl}`} alt="avatar"/>
             <p className="mr-5 font-medium group-hover:text-black transition-colors duration-200">{postData.user.fullName}</p>
             <time className="group-hover:text-black transition-colors duration-200">{formatDate(postData.createdAt)}</time>
           </div>

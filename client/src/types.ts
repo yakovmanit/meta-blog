@@ -1,6 +1,7 @@
 export type UserInPostType = {
   _id: string;
   fullName: string;
+  avatarUrl: string;
 }
 
 export type PostType = {
