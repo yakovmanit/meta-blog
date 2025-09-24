@@ -22,10 +22,10 @@ const Login = () => {
     // console.log(data);
 
     if (!data.payload) {
-      alert('Registration failed');
+      alert('Registration failed Login');
     }
 
-    if ('token' in data.payload) {
+    if (typeof data.payload === 'object' && data.payload !== null && 'token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token);
     }
   }

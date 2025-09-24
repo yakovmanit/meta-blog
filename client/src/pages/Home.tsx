@@ -1,19 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import banner from '../assets/img/banner.jpg';
 import heroAvatar from '../assets/img/hero-avatar.jpg';
 import PostCard from "../components/PostCard/index.tsx";
-import {fetchPosts} from "../../redux/slices/postsSlice.ts";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
+import { useFetchPostsQuery } from "../../redux/api/postsApi.ts";
 import PostCardSkeleton from "../components/PostCard/PostCardSkeleton.tsx";
 
 const Home: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.posts.items);
-  const postsStatus = useAppSelector((state) => state.posts.loading);
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch])
+  // RTK Query
+  const {
+    data: posts = [],
+    isLoading,
+    isError
+  } = useFetchPostsQuery();
 
   return (
     <div>
@@ -47,10 +45,14 @@ const Home: React.FC = () => {
 
           <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {
-              postsStatus === 'pending' || postsStatus ===  'failed' ? (
+              isLoading ? (
                 [...new Array(5)].map((_, i) =>
                   <PostCardSkeleton key={i} />
                 )
+              ) : isError ? (
+                <div className="col-span-full text-center text-red-500">
+                  Ошибка загрузки постов
+                </div>
               ) : (
                 posts.map(post =>
                   <PostCard key={post._id} {...post} />

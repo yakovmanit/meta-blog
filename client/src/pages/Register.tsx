@@ -24,12 +24,12 @@ const Register: React.FC = () => {
       // console.log(data);
 
       if (!data.payload) {
-        alert('Registration failed');
+        alert('Registration failed Register');
       }
 
-      if ('token' in data.payload) {
-        window.localStorage.setItem('token', data.payload.token);
-      }
+    if (typeof data.payload === 'object' && data.payload !== null && 'token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token);
+    }
   }
 
   if (isAuth) {

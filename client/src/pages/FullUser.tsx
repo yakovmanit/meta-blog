@@ -5,22 +5,17 @@ import {UserType} from "../types.ts";
 import PostCardSkeleton from "../components/PostCard/PostCardSkeleton.tsx";
 import PostCard from "../components/PostCard";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {fetchPosts} from "../../redux/slices/postsSlice.ts";
+import {useFetchPostsQuery} from "../../redux/api/postsApi.ts";
 import {logout} from "../../redux/slices/authSlice.ts";
 
 const FullUser = () => {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.posts.items);
-  const postsStatus = useAppSelector((state) => state.posts.loading);
+  const { data: posts = [], isLoading } = useFetchPostsQuery()
   const currentUser = useAppSelector(state => state.auth.data);
 
   const [userData, setUserData] = useState<UserType>();
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch])
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -83,7 +78,7 @@ const FullUser = () => {
           </h2>
           <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {
-              postsStatus === 'pending' || postsStatus ===  'failed' ? (
+              isLoading ? (
                 [...new Array(5)].map((_, i) =>
                   <PostCardSkeleton key={i} />
                 )
