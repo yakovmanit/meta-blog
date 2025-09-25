@@ -1,11 +1,10 @@
-// redux/api/postsApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { PostType } from '../../src/types'
 
 export const postsApi = createApi({
   reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4444', // Base URL
+    baseUrl: 'http://localhost:4444',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token')
 

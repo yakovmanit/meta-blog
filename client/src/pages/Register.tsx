@@ -6,7 +6,6 @@ import {RegisterValuesType} from "../types.ts";
 import { useFetchRegisterMutation } from "../../redux/api/authApi.ts";
 
 const Register: React.FC = () => {
-  // const dispatch = useAppDispatch();
   const [fetchRegister] = useFetchRegisterMutation();
 
   const isAuth = useAppSelector(state => Boolean(state.auth.data));

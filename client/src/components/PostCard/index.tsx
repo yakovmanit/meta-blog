@@ -3,12 +3,9 @@ import {PostType} from "../../types.ts";
 import React from "react";
 import { useAppSelector} from "../../../redux/hooks.ts";
 import {useDeletePostMutation} from "../../../redux/api/postsApi.ts";
-// TODO: delete comments
-// import {deletePost} from "../../../redux/slices/postsSlice.ts";
 
 const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, createdAt }) => {
   const currentUser = useAppSelector(state => state.auth.data);
-  // const dispatch = useAppDispatch();
   const [deletePost] = useDeletePostMutation();
 
   const formatDate = (isoDate: string): string => {

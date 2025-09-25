@@ -35,19 +35,6 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchRegister.pending, (state) => {
-      //   state.data = null;
-      //   state.loading = 'pending';
-      // })
-      // .addCase(fetchRegister.fulfilled, (state, action) => {
-      //   state.data = action.payload;
-      //   state.loading = 'succeeded';
-      // })
-      // .addCase(fetchRegister.rejected, (state) => {
-      //   state.data = null;
-      //   state.loading = 'failed';
-      // })
-
       .addCase(fetchAuthMe.pending, (state) => {
         state.data = null;
         state.loading = 'pending';
