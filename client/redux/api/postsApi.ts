@@ -15,7 +15,7 @@ export const postsApi = createApi({
       return headers
     },
   }),
-  tagTypes: ['Post', 'User'],
+  tagTypes: ['Post'],
   endpoints: (builder) => ({
     // Get all posts
     fetchPosts: builder.query<PostType[], void>({

@@ -1,13 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from "../../src/axios";
-import {LoginValuesType, RegisterValuesType, UserType} from "../../src/types.ts";
-// import type { PayloadAction } from '@reduxjs/toolkit'
-
-export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params: RegisterValuesType) => {
-    const { data } = await axios.post('/auth/register', params);
-
-    return data;
-})
+import {LoginValuesType, UserType} from "../../src/types.ts";
 
 export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
     const { data } = await axios.get('/auth/me');
@@ -42,18 +35,18 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchRegister.pending, (state) => {
-        state.data = null;
-        state.loading = 'pending';
-      })
-      .addCase(fetchRegister.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.loading = 'succeeded';
-      })
-      .addCase(fetchRegister.rejected, (state) => {
-        state.data = null;
-        state.loading = 'failed';
-      })
+      // .addCase(fetchRegister.pending, (state) => {
+      //   state.data = null;
+      //   state.loading = 'pending';
+      // })
+      // .addCase(fetchRegister.fulfilled, (state, action) => {
+      //   state.data = action.payload;
+      //   state.loading = 'succeeded';
+      // })
+      // .addCase(fetchRegister.rejected, (state) => {
+      //   state.data = null;
+      //   state.loading = 'failed';
+      // })
 
       .addCase(fetchAuthMe.pending, (state) => {
         state.data = null;

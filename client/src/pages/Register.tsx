@@ -1,12 +1,14 @@
 import {Link, Navigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
-import {fetchRegister} from "../../redux/slices/authSlice";
+import { useAppSelector} from "../../redux/hooks.ts";
 import {useForm} from "react-hook-form";
 import React from "react";
 import {RegisterValuesType} from "../types.ts";
+import { useFetchRegisterMutation } from "../../redux/api/authApi.ts";
 
 const Register: React.FC = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
+  const [fetchRegister] = useFetchRegisterMutation();
+
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -19,16 +21,19 @@ const Register: React.FC = () => {
   });
 
   const onSubmit = async (values: RegisterValuesType) => {
-      const data = await dispatch(fetchRegister(values));
+    try {
+      const result = await fetchRegister(values).unwrap();
 
-      // console.log(data);
+      console.log(result);
 
-      if (!data.payload) {
-        alert('Registration failed Register');
+      if (result?.token) {
+        window.localStorage.setItem('token', result.token);
+      } else {
+        alert('Registration failed - no token received');
       }
-
-    if (typeof data.payload === 'object' && data.payload !== null && 'token' in data.payload) {
-      window.localStorage.setItem('token', data.payload.token);
+    } catch (err) {
+      console.error('Registration failed:', err);
+      alert('Registration failed');
     }
   }
 
