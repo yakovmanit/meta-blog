@@ -31,7 +31,7 @@ export const createPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find().populate("user", "fullName avatarUrl");
+    const posts = await PostModel.find().populate("user", "_id fullName avatarUrl");
 
     res.json(posts);
 
@@ -55,7 +55,7 @@ export const getOnePost = async (req, res) => {
       {
         returnDocument: 'after'
       }
-    ).populate("user", "fullName avatarUrl")
+    ).populate("user", "_id fullName avatarUrl")
 
     if (!post) {
       return res.status(400).json({
