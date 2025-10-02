@@ -18,8 +18,6 @@ const FullUser = () => {
 
   const { data: posts, isLoading: postsStatus } = useFetchPostsQuery();
 
-  console.log(posts);
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
