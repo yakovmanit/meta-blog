@@ -12,13 +12,21 @@ const postApi = api
         query: () => ({
           url: 'posts',
         }),
+        providesTags: ['Posts'],
       }),
 
-
+      deletePost: build.mutation({
+        query: (id) => ({
+          url: `posts/${id}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: ['Posts'],
+      }),
 
     }),
   });
 
 export const {
   useFetchPostsQuery,
+  useDeletePostMutation,
 } = postApi;

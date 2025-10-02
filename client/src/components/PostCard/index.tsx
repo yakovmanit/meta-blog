@@ -1,12 +1,12 @@
 import {Link} from "react-router-dom";
 import {PostType} from "../../types.ts";
 import React from "react";
-import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
-import {deletePost} from "../../../redux/slices/postsSlice.ts";
+import {useAppSelector} from "../../../redux/hooks.ts";
+import {useDeletePostMutation} from "../../../redux/api/postApi.ts";
 
 const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, createdAt }) => {
   const currentUser = useAppSelector(state => state.auth.data);
-  const dispatch = useAppDispatch();
+  const [deletePost] = useDeletePostMutation();
 
   const formatDate = (isoDate: string): string => {
     const date = new Date(isoDate);
@@ -19,7 +19,7 @@ const PostCard: React.FC<PostType> = ({ title, tags, _id, user, imageUrl, create
   };
 
   const deletePostHandler = async () => {
-    await dispatch(deletePost(_id));
+    await deletePost(_id);
   }
 
   return (
