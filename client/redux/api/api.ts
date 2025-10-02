@@ -7,7 +7,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.PUBLIC_API_URL}`,
+  baseUrl: `${import.meta.env.PUBLIC_API_URL}`,
 
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
