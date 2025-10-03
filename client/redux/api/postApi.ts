@@ -4,7 +4,6 @@ import {PostType} from "../../src/types.ts";
 const postApi = api
   .injectEndpoints({
     endpoints: (build) => ({
-      // TODO: when new post created - refresh fetching of posts
       fetchPosts: build.query<
         PostType[],
         void
@@ -23,10 +22,30 @@ const postApi = api
         invalidatesTags: ['Posts'],
       }),
 
+      createPost: build.mutation({
+        query: (fields) => ({
+          url: 'posts',
+          method: 'POST',
+          body: fields,
+        }),
+        invalidatesTags: ['Posts'],
+      }),
+
+      updatePost: build.mutation({
+        query: ({id, fields}) => ({
+          url: `posts/${id}`,
+          method: 'PATCH',
+          body: fields,
+        }),
+        invalidatesTags: ['Posts'],
+      }),
+
     }),
   });
 
 export const {
   useFetchPostsQuery,
   useDeletePostMutation,
+  useCreatePostMutation,
+  useUpdatePostMutation,
 } = postApi;

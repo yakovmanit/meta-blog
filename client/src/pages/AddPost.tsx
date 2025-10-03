@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import React from 'react';
 import axios from "../axios.ts";
 import {PostType} from "../types.ts";
+import {useCreatePostMutation, useUpdatePostMutation} from "../../redux/api/postApi.ts";
 
 const AddPost = () => {
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
@@ -17,6 +18,9 @@ const AddPost = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEdible = id;
+
+  const [updatePost] = useUpdatePostMutation();
+  const [createPost] = useCreatePostMutation();
 
   // Upload image to server and set its url into imageUrl
   const handleChangeFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,20 +45,24 @@ const AddPost = () => {
 
   // Submit data to server
   const onSubmit = async () => {
-    const fields = {
-      title,
-      text,
-      tags: tags.replace(/\s/g, "").split(','),
-      imageUrl,
+    try {
+      const fields = {
+        title,
+        text,
+        tags: tags.replace(/\s/g, "").split(','),
+        imageUrl,
+      }
+
+      if (isEdible) {
+        await updatePost({ id, fields }).unwrap();
+        navigate(`/posts/${id}`);
+      } else {
+        const result = await createPost(fields).unwrap();
+        navigate(`/posts/${result._id}`);
+      }
+    } catch (err) {
+      console.error('Failed to save post:', err);
     }
-
-    const { data } = !isEdible
-      ? await axios.post('/posts', fields)
-      : await axios.patch(`/posts/${id}`, fields);
-
-    const _id = isEdible ? id : data._id;
-
-    navigate(`/posts/${_id}`)
   }
 
   // Update post logic
