@@ -1,12 +1,11 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "../axios.ts";
-import {UserType} from "../types.ts";
-import PostCardSkeleton from "../components/PostCard/PostCardSkeleton.tsx";
-import PostCard from "../components/PostCard";
+import {PostType, UserType} from "../types.ts";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {logout} from "../../redux/slices/authSlice.ts";
 import {useFetchPostsQuery} from "../../redux/api/postApi.ts";
+import {Posts} from "../components/Posts.tsx";
 
 const FullUser = () => {
   const { id } = useParams();
@@ -16,7 +15,7 @@ const FullUser = () => {
 
   const [userData, setUserData] = useState<UserType>();
 
-  const { data: posts, isLoading: postsStatus } = useFetchPostsQuery();
+  const { data, isLoading } = useFetchPostsQuery();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -73,28 +72,11 @@ const FullUser = () => {
         </div>
 
         {/* User posts block */}
-        <div>
-          <h2 className="mb-4 text-xl font-bold md:text-2xl md:mb-6">
-            User posts
-          </h2>
-          <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {
-              postsStatus ? (
-                [...new Array(5)].map((_, i) =>
-                  <PostCardSkeleton key={i} />
-                )
-              ) : (
-                posts
-                  ?.filter(post => {
-                    return post.user._id === userData._id;
-                  })
-                  .map(post =>
-                    <PostCard key={post._id} {...post} />
-                  )
-              )
-            }
-          </div>
-        </div>
+        <Posts
+          title={"User's posts"}
+          posts={data as PostType[]}
+          postsStatus={isLoading}
+        />
       </div>
     </div>
   );

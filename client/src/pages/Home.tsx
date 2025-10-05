@@ -1,12 +1,12 @@
 import React from 'react';
 import banner from '../assets/img/banner.jpg';
 import heroAvatar from '../assets/img/hero-avatar.jpg';
-import PostCard from "../components/PostCard/index.tsx";
-import PostCardSkeleton from "../components/PostCard/PostCardSkeleton.tsx";
 import {useFetchPostsQuery} from "../../redux/api/postApi.ts";
+import {Posts} from "../components/Posts.tsx";
+import {PostType} from "../types.ts";
 
 const Home: React.FC = () => {
-  const { data: posts, isLoading: postsStatus } = useFetchPostsQuery();
+  const { data, isLoading } = useFetchPostsQuery();
 
   return (
     <div>
@@ -32,27 +32,12 @@ const Home: React.FC = () => {
       </section>
 
       {/* Posts */}
-      <section>
-        <div className="custom-container">
-          <h2 className="mb-6 text-xl font-bold md:text-2xl md:mb-8">
-            Latest Post
-          </h2>
+      <Posts
+        title={"Latest posts"}
+        posts={data as PostType[]}
+        postsStatus={isLoading}
+      />
 
-          <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {
-              postsStatus ? (
-                [...new Array(5)].map((_, i) =>
-                  <PostCardSkeleton key={i} />
-                )
-              ) : (
-                posts?.map(post =>
-                  <PostCard key={post._id} {...post} />
-                )
-              )
-            }
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
