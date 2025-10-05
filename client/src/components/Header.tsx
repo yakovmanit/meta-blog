@@ -7,8 +7,11 @@ import burgerIcon from "@/assets/img/burger.svg";
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks.ts";
 import {fetchAuthMe} from "../../redux/slices/authSlice.ts";
+import {useTheme} from "../hooks/useTheme.ts";
 
 const Header: React.FC = () => {
+  const { isDark, handleToggle } = useTheme();
+
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => Boolean(state.auth.data));
   const currentUser = useAppSelector(state => state.auth.data);
@@ -22,30 +25,6 @@ const Header: React.FC = () => {
 
 
   const [closeMenu, setCloseMenu] = useState<boolean>(false);
-
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Check localStorage
-    const theme = localStorage.getItem('theme');
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      setIsDark(true);
-    }
-  }, []);
-
-  const handleToggle = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-
-    if (newTheme) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
 
   return (
     <header>
